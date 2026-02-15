@@ -11,15 +11,15 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 @app.route("/")
 def index():
     couple_info = {
-        "title": "Nuestra Historia",
+        "title": "Pipe y Gaby",
         "subtitle": "Una página para celebrar lo bonito de nosotros",
         "you": {
-            "name": "Tu Nombre",
+            "name": "Pipe",
             "about": "Soy detallista, soñador y feliz de compartir cada momento contigo.",
             "likes": ["Salir a caminar", "Escuchar música", "Tomar fotos juntos"],
         },
         "partner": {
-            "name": "Nombre de Tu Novia",
+            "name": "Gaby",
             "about": "Eres dulce, fuerte y la persona que ilumina mis días.",
             "likes": ["Ver atardeceres", "Reír sin parar", "Los pequeños detalles"],
         },
