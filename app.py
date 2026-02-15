@@ -2,10 +2,21 @@ from flask import Flask, render_template, request
 import os
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
 
-# Ensure upload folder exists
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+def resolve_upload_folder() -> str:
+    preferred_folder = os.path.join("static", "uploads")
+    fallback_folder = os.path.join("/tmp", "uploads")
+
+    try:
+        os.makedirs(preferred_folder, exist_ok=True)
+        return preferred_folder
+    except OSError:
+        os.makedirs(fallback_folder, exist_ok=True)
+        return fallback_folder
+
+
+app.config['UPLOAD_FOLDER'] = resolve_upload_folder()
 
 
 @app.route("/")
@@ -42,8 +53,8 @@ def health():
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
-        file = request.files['photo']
-        if file:
+        file = request.files.get('photo')
+        if file and file.filename:
             filename = file.filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return render_template("upload.html", message="Foto subida exitosamente!")
