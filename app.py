@@ -34,6 +34,11 @@ def index():
     return render_template("index.html", data=couple_info)
 
 
+@app.route("/health")
+def health():
+    return {"status": "ok"}, 200
+
+
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST':
