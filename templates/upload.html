@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subir Fotos ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="hearts" aria-hidden="true">
+      <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+    </div>
+
+    <main class="card">
+      <header class="hero">
+        <p class="tag">Con amor</p>
+        <h1>Subir Fotos de Nuestra Relación</h1>
+        <p class="subtitle">Comparte los momentos especiales que hemos vivido juntos</p>
+      </header>
+
+      <section class="upload-section">
+        {% if message %}
+        <p class="success-message">{{ message }}</p>
+        {% endif %}
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="photo">Selecciona una foto:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+          </div>
+          <div class="form-group">
+            <label for="description">Descripción (opcional):</label>
+            <textarea id="description" name="description" rows="3" placeholder="Describe este momento especial..."></textarea>
+          </div>
+          <button type="submit" class="upload-btn">Subir Foto</button>
+        </form>
+      </section>
+
+      <p class="message">Cada foto es un recuerdo que atesoramos juntos.</p>
+    </main>
+  </body>
+</html>

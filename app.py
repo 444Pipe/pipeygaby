@@ -1,6 +1,11 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import os
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+# Ensure upload folder exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 
 @app.route("/")
@@ -27,6 +32,17 @@ def index():
     }
 
     return render_template("index.html", data=couple_info)
+
+
+@app.route("/upload", methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        file = request.files['photo']
+        if file:
+            filename = file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return render_template("upload.html", message="Foto subida exitosamente!")
+    return render_template("upload.html")
 
 
 if __name__ == "__main__":
